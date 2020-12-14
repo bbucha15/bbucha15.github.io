@@ -61,12 +61,41 @@
         margin-top: 20px;
         width: 325px;
       }
+      
+      .checkbox-overlay {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.8);
+        margin-right: 20px;
+        font-family: Arial, sans-serif;
+        overflow: auto;
+        border-radius: 3px;
+        }
+      #checkbox {
+        top: 120px;
+        height: 85px;
+        margin-top: 5px;
+        width: 165px;
+      }
     </style>
   </head>
   <body>
     <div id="map"></div>
     <div class="map-overlay" id="features">
       <div id="pd"><p>Hover over a county!</p></div>
+    </div>
+    <div class="checkbox-overlay" id="checkbox">
+      <div>
+      <p>
+      <input type="checkbox" id="PopulationBox" name="Population" checked>
+      <label for="PopulationBox"> Population</label><br>
+      <input type="checkbox" id="IncomeBox" name="Income" checked>
+      <label for="IncomeBox"> Income</label><br>
+      <input type="checkbox" id="ISPBox" name="InternetProviders" checked>
+      <label for="ISPBox"> Internet Providers</label><br>
+      </p>
+    </div>
     </div>
     <div class="map-overlay" id="legend"></div>
 
@@ -77,7 +106,7 @@
       //create map
       var map = new mapboxgl.Map({
         container: "map", // container id
-        style: "mapbox://styles/bbucha15/ckiologmf1oso18n6pzev3jdh", // map style URL from Mapbox Studio
+        style: "mapbox://styles/bbucha15/ckiologmf1oso18n6pzev3jdh" // map style URL from Mapbox Studio
       });
 
       // wait for map to load before adjusting it
@@ -87,6 +116,29 @@
 
         // make a pointer cursor
         map.getCanvas().style.cursor = "default";
+
+        // change layer visability on click
+        PopulationBox.onclick = function(event){
+          if (PopulationBox.checked){
+            map.setPaintProperty('Population', 'fill-opacity', 0.75);
+          } else {
+            map.setPaintProperty('Population', 'fill-opacity', 0);
+          }
+        }
+        IncomeBox.onclick = function(event){
+          if (IncomeBox.checked){
+            map.setPaintProperty('Median_Income', 'fill-opacity', 0.75);
+          } else {
+            map.setPaintProperty('Median_Income', 'fill-opacity', 0);
+          }
+        }
+        ISPBox.onclick = function(event){
+          if (ISPBox.checked){
+            map.setPaintProperty('ISP_Coverage', 'fill-opacity', 0.75);
+          } else {
+            map.setPaintProperty('ISP_Coverage', 'fill-opacity', 0);
+          }
+        }
 
         // change info window on hover
         map.on("mousemove", function (e) {
@@ -113,6 +165,7 @@
             document.getElementById("pd").innerHTML =
               "<p>Hover over a county!</p>";
           }
+          
         });
       });
     </script>
