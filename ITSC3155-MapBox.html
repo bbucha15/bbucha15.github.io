@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ITSC3155 Map</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <script>
+      function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+      function convertPercent(x){
+        return (x*100).toFixed(1);
+      }
+    </script>
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      h2,
+      h3 {
+        margin: 10px;
+        font-size: 1.2em;
+      }
+      h3 {
+        font-size: 1em;
+      }
+      p {
+        font-size: 0.85em;
+        margin: 10px;
+        text-align: left;
+      }
+      .map-overlay {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.8);
+        margin-right: 20px;
+        font-family: Arial, sans-serif;
+        overflow: auto;
+        border-radius: 3px;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      #features {
+        top: 0;
+        height: 100px;
+        margin-top: 20px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="map-overlay" id="features">
+      <div id="pd"><p>Hover over a state!</p></div>
+    </div>
+    <div class="map-overlay" id="legend"></div>
+
+    <script>
+      // define access token
+      mapboxgl.accessToken = "pk.eyJ1IjoiYmJ1Y2hhMTUiLCJhIjoiY2tpa3RheXZ1MGQ1eTJxcDdkM3hwYWlsYSJ9.rDayDgVulOU11ehRHQqCgA";
+
+      //create map
+      var map = new mapboxgl.Map({
+        container: "map", // container id
+        style: "mapbox://styles/bbucha15/ckiologmf1oso18n6pzev3jdh" // map style URL from Mapbox Studio
+      });
+
+      // wait for map to load before adjusting it
+      map.on("load", function () {
+        // make a pointer cursor
+        map.getCanvas().style.cursor = "default";
+
+        // make a pointer cursor
+        map.getCanvas().style.cursor = "default";
+
+        // change info window on hover
+        map.on("mousemove", function (e) {
+          var pop_data = map.queryRenderedFeatures(e.point, {
+            layers: ["Population"]
+          });
+          var isp_data = map.queryRenderedFeatures(e.point, {
+            layers: ["ISP_Coverage"]
+          });
+          var income_data = map.queryRenderedFeatures(e.point, {
+            layers: ["Median_Income"]
+          });
+
+          if (pop_data.length > 0) {
+            document.getElementById("pd").innerHTML =
+              "<h3><strong>" +
+              pop_data[0].properties.Name +
+              "</strong></h3><p><strong><em>" +
+                "</strong>Population: " + numberWithCommas(pop_data[0].properties.Population) + "<br>" +
+                "Median Income: $" + numberWithCommas(income_data[0].properties.Median_Income) + "<br>" +
+                "ISP Coverage: " + convertPercent(isp_data[0].properties.ISP_Coverage) + "%"
+                + "</p>";
+          } else {
+            document.getElementById("pd").innerHTML =
+              "<p>Hover over a state!</p>";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
