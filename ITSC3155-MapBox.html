@@ -78,6 +78,22 @@
         margin-top: 5px;
         width: 165px;
       }
+
+      #legend {
+        padding: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        line-height: 18px;
+        height: 150px;
+        margin-bottom: 40px;
+        width: 100px;
+      }
+      .legend-key {
+        display: inline-block;
+        border-radius: 20%;
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+      }
     </style>
   </head>
   <body>
@@ -139,6 +155,77 @@
             map.setPaintProperty('ISP_Coverage', 'fill-opacity', 0);
           }
         }
+
+        // define data names
+        var ISP_DataRange = [
+          '16%',
+          '85%',
+          '100%'
+        ];
+        var Population_DataRange = [
+          '4,000',
+          '127,000',
+          '1,112,000'
+        ];
+        var Income_DataRange = [
+          '$27,000',
+          '$70,000',
+          '$113,000'
+        ];
+        var colors = [
+          '#ff0000',
+          '#ffff00',
+          '#00ff00'
+        ];
+
+        // create population legend
+        for (i = 0; i < Population_DataRange.length; i++) {
+          var data = Population_DataRange[i];
+          var color = colors[i];
+          var item = document.createElement('div');
+          var key = document.createElement('span');
+          key.className = 'legend-key';
+          key.style.backgroundColor = color;
+
+          var value = document.createElement('span');
+          value.innerHTML = data;
+          item.appendChild(key);
+          item.appendChild(value);
+          legend.appendChild(item);
+        }
+
+        // create income legend
+        for (i = 0; i < Income_DataRange.length; i++) {
+          var data = Income_DataRange[i];
+          var color = colors[i];
+          var item = document.createElement('div');
+          var key = document.createElement('span');
+          key.className = 'legend-key';
+          key.style.backgroundColor = color;
+
+          var value = document.createElement('span');
+          value.innerHTML = data;
+          item.appendChild(key);
+          item.appendChild(value);
+          legend.appendChild(item);
+        }
+
+        // create ISP legend
+        for (i = 0; i < ISP_DataRange.length; i++) {
+          var data = ISP_DataRange[i];
+          var color = colors[i];
+          var item = document.createElement('div');
+          var key = document.createElement('span');
+          key.className = 'legend-key';
+          key.style.backgroundColor = color;
+
+          var value = document.createElement('span');
+          value.innerHTML = data;
+          item.appendChild(key);
+          item.appendChild(value);
+          legend.appendChild(item);
+        }
+
 
         // change info window on hover
         map.on("mousemove", function (e) {
