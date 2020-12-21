@@ -1,11 +1,101 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Page Title</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>BNW Labs</title>
+        <meta name="Map" content="Map">
+    </head>
 
-<h1>Test</h1>
+    <style>
+        body{
+    background-color: white;
+}
+#background {
+    background-color: white;
+    margin: auto;
+    width: 95%;
+    height: 100%;
+    text-align: center;
+    border: none;
+    color: black;
+}
 
-</body>
-</html>
+.info {
+    background-color: #39c9f554 ;
+    border: black solid 1px;
+    margin: auto;
+    width: 35%;
+    height: 70%;
+}
+/*
+.button {
+    width: 20%;
+    font-size: 18px;
+    margin:auto;
+    border-radius: 2px;
+    border: solid 1px black;
+}
+*/
+
+.button {
+    width: 20%;
+    font-size: 25px;
+    margin:auto;
+    margin-top: 5%;
+    border-radius: 50%;
+    height: 100px;
+    border: solid 1px black;
+    background-color: white;
+}
+
+.button:hover {
+    opacity: 0.6;
+    background-color: lightgreen; 
+}
+
+.button:focus {
+    outline: none;
+}
+p {
+    margin: auto;
+    padding: 16px;
+    text-align:left;
+    font-size: 18px;
+}
+h1 {
+    border-bottom: black;
+} 
+
+#project{
+    margin-top: 10%;
+    font-size: 14px;
+}
+    </style>
+
+    <body>
+        <div id="background">
+            <h1>BNW Labs Service Map</h1>
+            <div class="info">
+                <h2>About Us</h2>
+                <p>Our goal is to provide you data about internet services around your neighborhood or other places you would like to know. 
+                  Our website checks the internet service percent converage, population, and income.  
+                   All of these are used to see if they make a difference in the usage of internet in a location.  
+                  Our service would be great for internet service provider, business, or just people who want better internet in their location.  </p>
+                
+                <form action="map.html">
+                    <input class="button" type="submit" value="Map">
+                </form>
+                    <p id="project">This project, made for UNCC ITSC3155, 
+                        helps visualize the correlation between low income or low population areas to areas underserved by internet providers. 
+                        Data is from the Census Bureau and BroadbandNow.</p>
+                    <p>
+                        <U>Sources</U> <br>
+                        Income: <a href="https://www.census.gov/quickfacts/fact/table/US/INC110219">www.census.gov/fact</a><br>
+                        Population: <a href="https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-total.html">https://www.census.gov/data</a><br>
+                        County Boundaries: <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html">https://www.census.gov/geographies</a><br>
+                        SC Internet Service Provider: <a href="https://broadbandnow.com/South-Carolina">broadbandnow.com/South-Carolina</a><br>
+                        NC Internet Service Provider: <a href="https://broadbandnow.com/North-Carolina">broadbandnow.com/North-Carolina</a><br>
+                    </p>
+            </div>
+        </div>
+    </body>
