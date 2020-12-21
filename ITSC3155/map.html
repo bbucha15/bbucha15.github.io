@@ -1,260 +1,266 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>ITSC3155 Map</title>
-    <meta name="robots" content="noindex, nofollow" />
-    <meta
-      name="viewport"
-      content="initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
-    <script>
-      function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      }
-      function convertPercent(x){
-        return (x*100).toFixed(1);
-      }
-    </script>
-    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
-    <link
-      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      h2,
-      h3 {
-        margin: 10px;
-        font-size: 1.2em;
-      }
-      h3 {
-        font-size: 1em;
-      }
-      p {
-        font-size: 0.85em;
-        margin: 10px;
-        text-align: left;
-      }
-      .map-overlay {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        background: rgba(255, 255, 255, 0.8);
-        margin-right: 20px;
-        font-family: Arial, sans-serif;
-        overflow: auto;
-        border-radius: 3px;
-      }
-      #map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-      }
-      #features {
-        top: 0;
-        height: 100px;
-        margin-top: 20px;
-        width: 325px;
-      }
-      
-      .checkbox-overlay {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        background: rgba(255, 255, 255, 0.8);
-        margin-right: 20px;
-        font-family: Arial, sans-serif;
-        overflow: auto;
-        border-radius: 3px;
-        }
-      #checkbox {
-        top: 120px;
-        height: 85px;
-        margin-top: 5px;
-        width: 165px;
-      }
+    <head>
+        <meta charset="utf-8" />
+        <title>ITSC3155 Map</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+        <script>
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            function convertPercent(x) {
+                return (x * 100).toFixed(1);
+            }
+        </script>
+        <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
+        <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" rel="stylesheet" />
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            h2,
+            h3 {
+                margin: 10px;
+                font-size: 1.2em;
+            }
+            h3 {
+                font-size: 1em;
+            }
+            p {
+                font-size: 0.85em;
+                margin: 10px;
+                text-align: left;
+            }
+            .map-overlay {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.8);
+                margin-right: 20px;
+                font-family: Arial, sans-serif;
+                overflow: auto;
+                border-radius: 3px;
+            }
+            #map {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 100%;
+            }
+            #features {
+                top: 0;
+                height: 100px;
+                margin-top: 20px;
+                width: 325px;
+            }
 
-      #legend {
-        padding: 10px;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        line-height: 18px;
-        height: 150px;
-        margin-bottom: 40px;
-        width: 100px;
-      }
-      .legend-key {
-        display: inline-block;
-        border-radius: 20%;
-        width: 10px;
-        height: 10px;
-        margin-right: 5px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <div class="map-overlay" id="features">
-      <div id="pd"><p>Hover over a county!</p></div>
-    </div>
-    <div class="checkbox-overlay" id="checkbox">
-      <div>
-      <p>
-      <input type="checkbox" id="PopulationBox" name="Population" checked>
-      <label for="PopulationBox"> Population</label><br>
-      <input type="checkbox" id="IncomeBox" name="Income" checked>
-      <label for="IncomeBox"> Income</label><br>
-      <input type="checkbox" id="ISPBox" name="InternetProviders" checked>
-      <label for="ISPBox"> Internet Providers</label><br>
-      </p>
-    </div>
-    </div>
-    <div class="map-overlay" id="legend"></div>
+            .checkbox-overlay {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.8);
+                margin-right: 20px;
+                font-family: Arial, sans-serif;
+                overflow: auto;
+                border-radius: 3px;
+            }
+            #checkbox {
+                top: 120px;
+                height: 85px;
+                margin-top: 5px;
+                width: 165px;
+            }
 
-    <script>
-      // define access token
-      mapboxgl.accessToken = "pk.eyJ1IjoiYmJ1Y2hhMTUiLCJhIjoiY2tpa3RheXZ1MGQ1eTJxcDdkM3hwYWlsYSJ9.rDayDgVulOU11ehRHQqCgA";
+            #legend {
+                padding: 10px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                line-height: 18px;
+                max-height: 100%;
+                margin-bottom: 40px;
+                width: 120px;
+            }
+            .legend-key {
+                display: inline-block;
+                border-radius: 20%;
+                width: 10px;
+                height: 10px;
+                margin-right: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <div class="map-overlay" id="features">
+            <div id="pd"><p>Hover over a county!</p></div>
+        </div>
+        <div class="checkbox-overlay" id="checkbox">
+            <div>
+                <p>
+                    <!--Population Box -->
+                    <input type="checkbox" id="PopulationBox" name="Population" checked />
+                    <label for="PopulationBox"> Population</label><br />
+                    <!--Check Box-->
+                    <input type="checkbox" id="IncomeBox" name="Income" checked />
+                    <label for="IncomeBox"> Income</label><br />
+                    <!--Income Box-->
+                    <input type="checkbox" id="ISPBox" name="InternetProviders" checked />
+                    <label for="ISPBox"> Internet Providers</label><br />
+                </p>
+            </div>
+        </div>
+        <div class="map-overlay" id="legend"></div>
 
-      //create map
-      var map = new mapboxgl.Map({
-        container: "map", // container id
-        style: "mapbox://styles/bbucha15/ckiologmf1oso18n6pzev3jdh" // map style URL from Mapbox Studio
-      });
+        <script>
+            // define access token
+            mapboxgl.accessToken = "pk.eyJ1IjoiYmJ1Y2hhMTUiLCJhIjoiY2tpa3RheXZ1MGQ1eTJxcDdkM3hwYWlsYSJ9.rDayDgVulOU11ehRHQqCgA";
 
-      // wait for map to load before adjusting it
-      map.on("load", function () {
-        // make a pointer cursor
-        map.getCanvas().style.cursor = "default";
+            //create map
+            var map = new mapboxgl.Map({
+                container: "map", // container id
+                style: "mapbox://styles/bbucha15/ckiologmf1oso18n6pzev3jdh", // map style URL from Mapbox Studio
+            });
 
-        // make a pointer cursor
-        map.getCanvas().style.cursor = "default";
+            // wait for map to load before adjusting it
+            map.on("load", function () {
+                // make a pointer cursor
+                map.getCanvas().style.cursor = "default";
 
-        // change layer visability on click
-        PopulationBox.onclick = function(event){
-          if (PopulationBox.checked){
-            map.setPaintProperty('Population', 'fill-opacity', 0.7);
-          } else {
-            map.setPaintProperty('Population', 'fill-opacity', 0);
-          }
-        }
-        IncomeBox.onclick = function(event){
-          if (IncomeBox.checked){
-            map.setPaintProperty('Median_Income', 'fill-opacity', 0.7);
-          } else {
-            map.setPaintProperty('Median_Income', 'fill-opacity', 0);
-          }
-        }
-        ISPBox.onclick = function(event){
-          if (ISPBox.checked){
-            map.setPaintProperty('ISP_Coverage', 'fill-opacity', 0.5);
-          } else {
-            map.setPaintProperty('ISP_Coverage', 'fill-opacity', 0);
-          }
-        }
+                // make a pointer cursor
+                map.getCanvas().style.cursor = "default";
 
-        // define data names
-        var ISP_DataRange = [
-          '16%',
-          '85%',
-          '100%'
-        ];
-        var Population_DataRange = [
-          '4,000',
-          '127,000',
-          '1,112,000'
-        ];
-        var Income_DataRange = [
-          '$27,000',
-          '$70,000',
-          '$113,000'
-        ];
-        var colors = [
-          '#ff0000',
-          '#ffff00',
-          '#00ff00'
-        ];
+                // change layer visability on click
+                // Clicks on PopulationBox
+                PopulationBox.onclick = function (event) {
+                    //Check
+                    if (PopulationBox.checked) {
+                        map.setPaintProperty("Population", "fill-opacity", 0.7);
+                        // create population legend
+                        for (i = 0; i < Population_DataRange.length; i++) {
+                            var data = Population_DataRange[i];
+                            var color = colors[i];
+                            var item = document.createElement("div");
+                            var key = document.createElement("span");
+                            key.className = "legend-key";
+                            item.id = "pop";
+                            key.style.backgroundColor = color;
 
-        // create population legend
-        for (i = 0; i < Population_DataRange.length; i++) {
-          var data = Population_DataRange[i];
-          var color = colors[i];
-          var item = document.createElement('div');
-          var key = document.createElement('span');
-          key.className = 'legend-key';
-          key.style.backgroundColor = color;
+                            var value = document.createElement("span");
+                            value.innerHTML = data;
+                            item.appendChild(key);
+                            item.appendChild(value);
+                            legend.appendChild(item);
+                        }
+                    } else {
+                        //Uncheck
+                        map.setPaintProperty("Population", "fill-opacity", 0);
+                        //Deletes the keys
+                        document.getElementById("pop").remove();
+                        document.getElementById("pop").remove();
+                        document.getElementById("pop").remove();
+                        document.getElementById("pop").remove();
+                    }
+                };
 
-          var value = document.createElement('span');
-          value.innerHTML = data;
-          item.appendChild(key);
-          item.appendChild(value);
-          legend.appendChild(item);
-        }
+                // Clicks on IncomeBox
+                IncomeBox.onclick = function (event) {
+                    //Checked
+                    if (IncomeBox.checked) {
+                        map.setPaintProperty("Median_Income", "fill-opacity", 0.7);
+                        // create income legend
+                        for (i = 0; i < Income_DataRange.length; i++) {
+                            var data = Income_DataRange[i];
+                            var color = colors[i];
+                            var item = document.createElement("div");
+                            var key = document.createElement("span");
+                            key.className = "legend-key";
+                            item.id = "income";
+                            key.style.backgroundColor = color;
 
-        // create income legend
-        for (i = 0; i < Income_DataRange.length; i++) {
-          var data = Income_DataRange[i];
-          var color = colors[i];
-          var item = document.createElement('div');
-          var key = document.createElement('span');
-          key.className = 'legend-key';
-          key.style.backgroundColor = color;
+                            var value = document.createElement("span");
+                            value.innerHTML = data;
+                            item.appendChild(key);
+                            item.appendChild(value);
+                            legend.appendChild(item);
+                        }
+                    } else {
+                        //Uncheck
+                        map.setPaintProperty("Median_Income", "fill-opacity", 0);
+                        //Deletes the keys
+                        document.getElementById("income").remove();
+                        document.getElementById("income").remove();
+                        document.getElementById("income").remove();
+                        document.getElementById("income").remove();
+                    }
+                };
 
-          var value = document.createElement('span');
-          value.innerHTML = data;
-          item.appendChild(key);
-          item.appendChild(value);
-          legend.appendChild(item);
-        }
+                // Clicks on ISPBox
+                ISPBox.onclick = function (event) {
+                    //Checked
+                    if (ISPBox.checked) {
+                        map.setPaintProperty("ISP_Coverage", "fill-opacity", 0.5);
+                        // create ISP legend
+                        for (i = 0; i < ISP_DataRange.length; i++) {
+                            var data = ISP_DataRange[i];
+                            var color = colors[i];
+                            var item = document.createElement("div");
+                            var key = document.createElement("span");
+                            key.className = "legend-key";
+                            item.id = "isp";
+                            key.style.backgroundColor = color;
 
-        // create ISP legend
-        for (i = 0; i < ISP_DataRange.length; i++) {
-          var data = ISP_DataRange[i];
-          var color = colors[i];
-          var item = document.createElement('div');
-          var key = document.createElement('span');
-          key.className = 'legend-key';
-          key.style.backgroundColor = color;
+                            var value = document.createElement("span");
+                            value.innerHTML = data;
+                            item.appendChild(key);
+                            item.appendChild(value);
+                            legend.appendChild(item);
+                        }
+                    } else {
+                        //Unchecked
+                        map.setPaintProperty("ISP_Coverage", "fill-opacity", 0);
+                        //Deletes the keys
+                        document.getElementById("isp").remove();
+                        document.getElementById("isp").remove();
+                        document.getElementById("isp").remove();
+                        document.getElementById("isp").remove();
+                    }
+                };
 
-          var value = document.createElement('span');
-          value.innerHTML = data;
-          item.appendChild(key);
-          item.appendChild(value);
-          legend.appendChild(item);
-        }
+                // define data names
+                var ISP_DataRange = ["<br><b>ISP", "16%", "85%", "100%"];
+                var Population_DataRange = ["<br><b>Population", "4,000", "127,000", "1,112,000"];
+                var Income_DataRange = ["<br><b>Income", "$27,000", "$70,000", "$113,000"];
+                var colors = ["", "#ff0000", "#ffff00", "#00ff00"];
 
+                // change info window on hover
+                map.on("mousemove", function (e) {
+                    var pop_data = map.queryRenderedFeatures(e.point, {
+                        layers: ["Population"],
+                    });
+                    var isp_data = map.queryRenderedFeatures(e.point, {
+                        layers: ["ISP_Coverage"],
+                    });
+                    var income_data = map.queryRenderedFeatures(e.point, {
+                        layers: ["Median_Income"],
+                    });
 
-        // change info window on hover
-        map.on("mousemove", function (e) {
-          var pop_data = map.queryRenderedFeatures(e.point, {
-            layers: ["Population"]
-          });
-          var isp_data = map.queryRenderedFeatures(e.point, {
-            layers: ["ISP_Coverage"]
-          });
-          var income_data = map.queryRenderedFeatures(e.point, {
-            layers: ["Median_Income"]
-          });
-
-          if (pop_data.length > 0) {
-            document.getElementById("pd").innerHTML =
-              "<h3><strong>" +
-              pop_data[0].properties.Name +
-              "</strong></h3><p><strong><em>" +
-                "</strong>Population: " + numberWithCommas(pop_data[0].properties.Population) + "<br>" +
-                "Median Income: $" + numberWithCommas(income_data[0].properties.Median_Income) + "<br>" +
-                "ISP Coverage: " + convertPercent(isp_data[0].properties.ISP_Coverage) + "%"
-                + "</p>";
-          } else {
-            document.getElementById("pd").innerHTML =
-              "<p>Hover over a county!</p>";
-          }
-          
-        });
-      });
-    </script>
-  </body>
+                    if (pop_data.length > 0) {
+                        document.getElementById("pd").innerHTML =
+                            "<h3><strong>" +
+                            pop_data[0].properties.Name +
+                            "</strong></h3><p><strong><em>" +
+                            "</strong>Population: " + numberWithCommas(pop_data[0].properties.Population) +
+                            "<br>" +
+                            "Median Income: $" + numberWithCommas(income_data[0].properties.Median_Income) +
+                            "<br>" +
+                            "ISP Coverage: " + convertPercent(isp_data[0].properties.ISP_Coverage) + "%" +
+                            "</p>";
+                    } else {
+                        document.getElementById("pd").innerHTML = "<p>Hover over a county!</p>";
+                    }
+                });
+            });
+        </script>
+    </body>
 </html>
