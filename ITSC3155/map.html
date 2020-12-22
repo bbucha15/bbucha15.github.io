@@ -130,6 +130,60 @@
                 // make a pointer cursor
                 map.getCanvas().style.cursor = "default";
 
+                // define data names
+                var ISP_DataRange = ["<br><b>ISP", "16%", "85%", "100%"];
+                var Population_DataRange = ["<br><b>Population", "4,000", "127,000", "1,112,000"];
+                var Income_DataRange = ["<br><b>Income", "$27,000", "$70,000", "$113,000"];
+                var colors = ["", "#ff0000", "#ffff00", "#00ff00"];
+
+                // Creates legend on load
+                for (i = 0; i < Population_DataRange.length; i++) {
+                            var data = Population_DataRange[i];
+                            var color = colors[i];
+                            var item = document.createElement("div");
+                            var key = document.createElement("span");
+                            key.className = "legend-key";
+                            item.id = "pop";
+                            key.style.backgroundColor = color;
+
+                            var value = document.createElement("span");
+                            value.innerHTML = data;
+                            item.appendChild(key);
+                            item.appendChild(value);
+                            legend.appendChild(item);
+                }
+                for (i = 0; i < Income_DataRange.length; i++) {
+                            var data = Income_DataRange[i];
+                            var color = colors[i];
+                            var item = document.createElement("div");
+                            var key = document.createElement("span");
+                            key.className = "legend-key";
+                            item.id = "income";
+                            key.style.backgroundColor = color;
+
+                            var value = document.createElement("span");
+                            value.innerHTML = data;
+                            item.appendChild(key);
+                            item.appendChild(value);
+                            legend.appendChild(item);
+                }
+                for (i = 0; i < ISP_DataRange.length; i++) {
+                            var data = ISP_DataRange[i];
+                            var color = colors[i];
+                            var item = document.createElement("div");
+                            var key = document.createElement("span");
+                            key.className = "legend-key";
+                            item.id = "isp";
+                            key.style.backgroundColor = color;
+
+                            var value = document.createElement("span");
+                            value.innerHTML = data;
+                            item.appendChild(key);
+                            item.appendChild(value);
+                            legend.appendChild(item);
+                }
+
+
                 // change layer visability on click
                 // Clicks on PopulationBox
                 PopulationBox.onclick = function (event) {
@@ -226,12 +280,6 @@
                         document.getElementById("isp").remove();
                     }
                 };
-
-                // define data names
-                var ISP_DataRange = ["<br><b>ISP", "16%", "85%", "100%"];
-                var Population_DataRange = ["<br><b>Population", "4,000", "127,000", "1,112,000"];
-                var Income_DataRange = ["<br><b>Income", "$27,000", "$70,000", "$113,000"];
-                var colors = ["", "#ff0000", "#ffff00", "#00ff00"];
 
                 // change info window on hover
                 map.on("mousemove", function (e) {
